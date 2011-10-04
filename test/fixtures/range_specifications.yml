@@ -1,0 +1,29 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  min_effect_of_hr_incentive: 1
+  max_effect_of_hr_incentive: 1
+  min_effect_of_channel_incentive: 1
+  max_effect_of_channel_incentive: 1
+  min_effect_of_media: 1
+  max_effect_of_media: 1
+  min_dealer_catchment: 1
+  max_dealer_catchment: 1
+  min_consumer_catchment: 1
+  max_consumer_catchment: 1
+  min_employee_count: 1
+  max_employee_count: 1
+
+two:
+  min_effect_of_hr_incentive: 1
+  max_effect_of_hr_incentive: 1
+  min_effect_of_channel_incentive: 1
+  max_effect_of_channel_incentive: 1
+  min_effect_of_media: 1
+  max_effect_of_media: 1
+  min_dealer_catchment: 1
+  max_dealer_catchment: 1
+  min_consumer_catchment: 1
+  max_consumer_catchment: 1
+  min_employee_count: 1
+  max_employee_count: 1

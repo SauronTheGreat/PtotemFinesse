@@ -1,0 +1,26 @@
+<head>
+  <title><%= content_for?(:title) ? yield(:title) : "Ptotem" %></title>
+  <%= stylesheet_link_tag "application" %>
+
+
+  <%= javascript_include_tag :all %>
+  <%= csrf_meta_tag %>
+
+  <link rel="icon" href="/favicon.ico" type="image/ico"/>
+  <link rel="shortcut icon" href="/favicon.ico" type="image/ico"/>
+  <% if get_controller_name=="sessions" || get_controller_name=="welcome" %>
+
+      <%= javascript_include_tag 'custom_js/master_side_box_effects' %>
+      <%= javascript_include_tag 'custom_js/master_image_rollover' %>
+      <%= javascript_include_tag 'custom_js/master_pre_load_images' %>
+  <% else %>
+      <%= javascript_include_tag 'custom_js/master_image_rollover' %>
+      <%= javascript_include_tag 'custom_js/master_pre_load_images' %>
+      <%= javascript_include_tag 'custom_js/master_body_fade' %>
+      <%= javascript_include_tag 'custom_js/master_side_box_effects' %>
+
+
+  <% end %>
+
+
+</head>

@@ -1,0 +1,125 @@
+
+
+
+<% if @counter>@case_study.max_round %>
+
+    You have created all the rounds. <%= link_to "Go to Home",:controller => :rounds,:action => "index" %>
+
+<% else %>
+    <%= form_for @round, :url => {:action => 'create', :controller =>:rounds, :round_create_counter=>@counter} do |f| %>
+        <center>
+          <p>
+            <%= f.hidden_field :case_study_id, :value=>@case_study.id %>
+          </p>
+
+          <p>
+            <%= f.label "Name: " %><br/>
+            <%= f.text_field :name %>
+          </p>
+
+          <div id="accordion" align="center">
+            <table cellpadding="2px">
+              <tr>
+                <td width="50%">
+                  <% @macro_indicators.each do |macro_indicator| %>
+                      <h3><a href="#"><b style="color: orange;"> <%= macro_indicator.name %></b></a></h3>
+
+                      <div>
+                        <% macro_indicator.macro_indicator_options.each do |d| %>
+                            <%= f.fields_for :macro_indicator_for_rounds do |builder| %>
+                                <%= builder.hidden_field :round_id, :value=>f.id %>
+                                <%= builder.check_box :macro_indicator_option_id, {:checked => false}, "#{d.id}" %> <%= d.name %>
+                                <br/>
+                            <% end %>
+                        <% end %>
+                      </div>
+                  <% end %>
+
+                </td>
+
+                </tr><tr>
+                <td>
+                  <% @departments.each do |department| %>
+                      <h3><a href="#"><b style="color: orange;"><%= department.name %> </b></a></h3>
+
+                      <div>
+                        <% department.expenses.each do |e| %>
+                            <%= f.fields_for :round_expenses do |builder| %>
+                                <%= builder.hidden_field :round_id, :value=>f.id %>
+                                <%= builder.check_box :expense_id, {:checked => false}, "#{e.id}" %> <%= e.name %>
+                                <br/>
+                            <% end %>
+                        <% end %>
+                      </div>
+                  <% end %>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                      <h3><a href="#"><b style="color: orange;">HR Incentives</b></a></h3>
+
+                      <div>
+                        <table>
+                        <% @hr_incentives.each_with_index do |hr_incentive,index| %>
+                            <%= f.fields_for :hr_incentive_for_rounds do |builder| %>
+                                  <tr>
+
+                                <%= builder.hidden_field :round_id, :value=>f.id %>
+
+                                <td><div class=<%="hr#{index}"%>><%= builder.check_box :hr_incentive_id, {:checked => false}, "#{hr_incentive.id}" %><%= hr_incentive.name %></div></td>
+
+                                <td width="30%"><div class=<%="hr#{index}"%>><%= builder.label :Min_Range%><%= builder.text_field :min_limit ,:size=>2,:disabled=>true%></div></td>
+                                <td width="30%"><div class=<%="hr#{index}"%>><%= builder.label :Max_Range%><%= builder.text_field :max_limit,:size=>2,:disabled=>true%></div></td>
+
+
+                                </tr>
+                            <% end %>
+                        <% end %>
+                        </table>
+                      </div>
+                </td>
+                </tr><tr>
+               <td>
+                      <h3><a href="#"><b style="color: orange;">Channel Incentives</b></a></h3>
+
+                      <div>
+                        <table>
+                        <% @channel_incentives.each_with_index do |channel_incentive,index| %>
+                            <%= f.fields_for :channel_incentive_for_rounds do |builder| %>
+                                <tr>
+                                <%= builder.hidden_field :round_id, :value=>f.id %>
+                                <td><div class=<%="ch#{index}"%>><%= builder.check_box :channel_incentive_id, {:checked => false}, "#{channel_incentive.id}" %> <%= channel_incentive.name %></div></td>
+                                <td width="30%"><div class=<%="ch#{index}"%>><%= builder.label :Min_Range%><%= builder.text_field :min_limit ,:size=>2%></div></td>
+                                <td width="30%"><div class=<%="ch#{index}"%>><%= builder.label :Max_Range%><%= builder.text_field :max_limit ,:size=>2%></div></td>
+                                </tr>
+                            <% end %>
+                        <% end %>
+                        </table>
+                      </div>
+                </td>
+              </tr><tr>
+                <td>
+                      <h3><a href="#"><b style="color: orange;">Media</b></a></h3>
+
+                      <div>
+                        <table>
+                        <% @media.each do |medium| %>
+                            <%= f.fields_for :media_for_rounds do |builder| %>
+                                  <tr>
+                                <%= builder.hidden_field :round_id, :value=>f.id %>
+                                <td><%= builder.check_box :medium_id, {:checked => false}, "#{medium.id}" %> <%= medium.name %></td>
+                                <td width="30%"><%= builder.label :Min_Range%><%= builder.text_field :min_limit ,:size=>2%></td>
+                                <td width="30%"><%= builder.label :Max_Range%><%= builder.text_field :max_limit ,:size=>2%></td>
+                                </tr>
+                            <% end %>
+                        <% end %>
+                            </table>
+                      </div>
+                </td>
+              </tr>
+            </table>
+          </div>
+          <p><%= f.submit %></p>
+        </center>
+    <% end %>
+<% end %>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= content_for?(:title) ? yield(:title) : "Ptotem" %></title>
+  <%= stylesheet_link_tag "application" %>
+  <%= javascript_include_tag :all %>
+  <%= csrf_meta_tag %>
+
+  <link rel="icon" href="/favicon.ico" type="image/ico"/>
+  <link rel="shortcut icon" href="/favicon.ico" type="image/ico"/>
+
+  <script type="text/javascript" src="/javascripts/ckeditor/ckeditor.js"></script>
+  <script type="text/javascript" src="/javascripts/ckeditor/adapters/jquery.js"></script>
+  <script type="text/javascript">
+
+      /* IMAGE ROLLOVER SCRIPT */
+
+      // Preload the images for speed
+      $.preloadImages('/images/simulations_on.png');
+      $.preloadImages('/images/design_on.png');
+      $.preloadImages('/images/games_on.png');
+      $.preloadImages('/images/about_us_on.png');
+
+      // Set up rollover
+      $(
+              function() {
+
+                  $("img.rollover").hover(
+                          function() {
+                              this.src = this.src.replace("_off", "_on");
+                          },
+                          function() {
+                              this.src = this.src.replace("_on", "_off");
+                          }
+                  );
+
+                  $('textarea').ckeditor();
+
+              }
+      );
+
+  </script>
+
+  <%= yield(:head) %>
+</head>
+
+<body>
+<table style="width: 100%;height: 100%;vertical-align: top;">
+  <tr style="vertical-align: top;">
+    <td style="width:350px;vertical-align: top;">
+      <table style="width: 100%;height: 100%;vertical-align: top;">
+        <tr style="vertical-align: top;height: 120px;">
+          <td colspan="2">
+            <table style="width: 100%">
+              <tr>
+                <td>
+                  <a href="/"><img src="/images/logo_with_name.png" style="width:275px;height:100px;margin-left: 20px;"></a>
+                </td>
+                <td style="text-align: right;font-size: 24px;padding-right: 30px;"><%= yield(:title) %></td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr style="vertical-align: top;text-align: left;">
+          <td style="vertical-align: top;text-align: left;width: 100px;">
+            <%= render '/layouts/side_menu' %>
+          </td>
+          <td>
+            <div style="padding-right: 30px;">
+              <%= yield %>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+
+</body>
+</html>

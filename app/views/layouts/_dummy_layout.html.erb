@@ -1,0 +1,60 @@
+<table class="layout_table">
+  <tr class="layout_table_tr">
+    <td class="layout_table_td">
+      <table class="layout_table">
+        <tr class="inner_table_td_top">
+          <td>
+            <% @upload=Upload.find_by_name("Logo") %>
+            <% if @upload.nil? %>
+                <a href="/"><img src="/images/logo_with_name.png" class="logo"></a>
+            <% else %>
+
+                <a href="/"><%= image_tag @upload.photo.url %></a>
+            <% end %>
+
+          </td>
+        </tr>
+        <tr>
+          <td class="inner_table_td_middle">
+            <% if get_controller_name=="sessions" %>
+
+                <%= render :file=>'devise/sessions/new' %>
+                <% elsif get_controller_name=="registrations" %>
+                <%= render :file=>'devise/registrations/new' %>
+
+            <% else %>
+                <%= render "layouts/square_icons" %>
+            <% end %>
+          </td>
+        </tr>
+      </table>
+    </td>
+    <td class="layout_table_td">
+      <div class="headstuff">
+        <%= render :file=>'layouts/head_stuff' %>
+      </div>
+      <div id="container">
+        <% flash.each do |name, msg| %>
+            <%= content_tag :div, msg, :id => "flash_#{name}" %>
+        <% end %>
+        <%= content_tag :h1, yield(:title) if show_title? %>
+            <% if get_controller_name=="sessions" || get_controller_name=="registrations" %>
+
+        <%= render :file=>'layouts/side_box' %>
+            <% else %>
+        <%= render :file=>"welcome/#{get_action_name}" %>
+           <% end %>
+
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td class="footer">
+      <div id="footer">
+        ©2010 Ptotem Learning Projects LLP. <a href="/">Disclaimer</a>
+      </div>
+    </td>
+  </tr>
+</table>
+
+

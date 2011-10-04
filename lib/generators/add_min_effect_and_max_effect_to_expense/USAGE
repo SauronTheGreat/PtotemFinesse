@@ -1,0 +1,8 @@
+Description:
+    Explain the generator
+
+Example:
+    rails generate add_min_effect_and_max_effect_to_expense Thing
+
+    This will create:
+        what/will/it/create

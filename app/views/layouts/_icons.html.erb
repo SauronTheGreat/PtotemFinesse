@@ -1,0 +1,66 @@
+<tr>
+  <td>
+    <a href='/clients'>
+      <% @icon=Upload.find_by_name("Top-Right") %>
+      <% if @icon.nil? %>
+          <img src="/images/simulations_off.png" class="rollover"/>
+      <% else %>
+          <%= image_tag @icon.photo.url, :class=>"rollover" %>
+      <% end %>
+    </a>
+  </td>
+  <% if get_controller_name!="sessions" && get_controller_name!="welcome" %>
+      </tr>
+      <tr>
+  <% end %>
+
+  <td>
+    <a href='/student_groups' class="transition">
+
+      <% @icon=Upload.find_by_name("Top-Left") %>
+      <% if @icon.nil? %>
+          <img src="/images/games_off.png" class="rollover"/>
+      <% else %>
+          <%= image_tag @icon.photo.url, :class=>"rollover" %>
+      <% end %>
+
+
+    </a>
+  </td>
+  </tr>
+  <tr>
+    <td>
+      <a href='/questionnaires' class="transition">
+
+
+        <% @icon=Upload.find_by_name("Bottom-Right") %>
+        <% if @icon.nil? %>
+            <img src="/images/design_off.png" class="rollover"/>
+        <% else %>
+            <%= image_tag @icon.photo.url, :class=>"rollover" %>
+        <% end %>
+
+
+      </a>
+    </td>
+    <% if get_controller_name!="sessions" && get_controller_name!="welcome" %>
+        </tr>
+        <tr>
+    <% end %>
+
+    <td>
+      <a href='/facilitator_groups' class="transition">
+
+        <% @icon=Upload.find_by_name("Bottom-Left") %>
+        <% if @icon.nil? %>
+            <img src="/images/about_us_off.png" class="rollover"/>
+        <% else %>
+            <%= image_tag @icon.photo.url, :class=>"rollover" %>
+        <% end %>
+
+
+      </a>
+    </td>
+
+    </tr>
+

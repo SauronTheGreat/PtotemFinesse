@@ -1,0 +1,29 @@
+<h1>Listing media_for_rounds</h1>
+
+<table>
+  <tr>
+    <th>Round</th>
+    <th>Medium</th>
+    <th>Min limit</th>
+    <th>Max limit</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @media_for_rounds.each do |media_for_round| %>
+  <tr>
+    <td><%= media_for_round.round_id %></td>
+    <td><%= media_for_round.medium_id %></td>
+    <td><%= media_for_round.min_limit %></td>
+    <td><%= media_for_round.max_limit %></td>
+    <td><%= link_to 'Show', media_for_round %></td>
+    <td><%= link_to 'Edit', edit_media_for_round_path(media_for_round) %></td>
+    <td><%= link_to 'Destroy', media_for_round, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Media for round', new_media_for_round_path %>

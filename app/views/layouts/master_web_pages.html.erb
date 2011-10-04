@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<%= render 'layouts/head_tag' %>
+
+<body style="display: none;">
+
+<table class="layout_table">
+  <tr class="table_top">
+
+    <td class="table_logo" colspan="2">
+
+
+      <div class="footer">
+        <% @upload=Upload.find_by_name("Logo") %>
+        <% if @upload.nil? %>
+            <a href="/"><img src="/images/logo_with_name.png" class="logo"></a>
+        <% else %>
+
+            <a href="/"><%= image_tag @upload.photo.url %></a>
+        <% end %>
+      </div>
+    </td>
+    <!--This is empty td for spacing !-->
+
+
+    <td class="table_headstuff">
+      <div class="headstuff">
+        <%= render :file=>'layouts/head_stuff' %>
+      </div>
+
+    </td>
+  </tr>
+
+
+  <tr class="table_middle">
+
+    <td class="side_menu">
+
+      <%= render '/layouts/side_menu' %>
+
+
+    </td>
+
+    <td>
+      <div id="about_us_yellow_box">
+
+        <% if get_action_name=="create" || get_action_name=="index" %>
+            <% current_action="new" %>
+        <% else %>
+            <% current_action=get_action_name %>
+        <% end %>
+
+
+        <%= render :file=>controller_name+"/"+current_action%>
+
+
+      </div>
+      <br>
+
+      <div class="detail_icons">
+        <%= render 'layouts/about_us_menu' %>
+      </div>
+
+
+    </td>
+
+
+    <td>
+      <div id="about_us_green_box">
+
+        <% %>
+           <%= render :file=> controller_name+"/index"%>
+      </div>
+      <br>
+
+      <div class="detail_icons">
+
+      </div>
+
+    </td>
+
+
+</table>
+
+
+</body>
+</html>
