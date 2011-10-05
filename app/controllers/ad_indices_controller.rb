@@ -12,7 +12,7 @@ class AdIndicesController < ApplicationController
         index=0
         @all_media=Medium.all
         @all_media.each do |medium|
-          SelectedMedium.find_by_brand_id_and_
+         # SelectedMedium.find_by_brand_id_and_
           if SelectedMedium.find(:last,:conditions => ['brand_id=? and round_id=? and media_id=?',brand.id,@round.id,medium.id])!=nil
             index+=AddEffect.find_by_media_id(medium.id).ratio.to_f/SelectedMedium.count(:conditions => ['round_id=? and media_id=?',@round.id,medium.id]).to_f
           end

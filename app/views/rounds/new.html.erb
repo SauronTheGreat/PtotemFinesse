@@ -1,9 +1,66 @@
+<script type="text/javascript">
+    $(function() {
+        $(":text").attr('disabled', true);
+        $(":checkbox ").click(function(event) {
+            var x = $(this).parent().parent().attr("class");
+            $("." + x + "  :text").attr('disabled', false);
 
+            if ($(this).attr('checked'))
+                $("." + x + "  :text").attr('disabled', false);
+            else {
+                $("." + x + "  :text").attr('disabled', true);
+                $("." + x + "  :text").attr('value', '0');
+            }
+        });
+
+
+        $("form").submit(function(event) {
+            var hr_total = 0;
+            var ch_total = 0;
+            var md_total = 0;
+            $("[class^=hr]").each(function() {
+                var x = $(this).attr('class');
+                if ($("." + x + ">td > :text").attr("value")) {
+                    hr_total += parseInt($("." + x + ">td > :text").attr("value"));
+                    //alert($("." + x + ">td > :text").attr("value"));
+                }
+            });
+
+            $("[class^=ch]").each(function() {
+                var x = $(this).attr('class');
+                if ($("." + x + ">td > :text").attr("value")) {
+                    ch_total += parseInt($("." + x + ">td > :text").attr("value"));
+                    //alert($("." + x + ">td > :text").attr("value"));
+                }
+            });
+
+            $("[class^=md]").each(function() {
+                var x = $(this).attr('class');
+                if ($("." + x + ">td > :text").attr("value")) {
+                    md_total += parseInt($("." + x + ">td > :text").attr("value"));
+                    // alert($("."+x+">td > :text").attr("value"));
+                }
+            });
+            //alert("hr=" + hr_total + " ch=" + ch_total + " md=" + md_total);
+            if (hr_total > 100 || ch_total > 100 || md_total > 100)
+            {
+                alert("Invalid data");
+                return false;
+            }
+            else return true;
+
+
+        });
+
+    });
+
+
+</script>
 
 
 <% if @counter>@case_study.max_round %>
 
-    You have created all the rounds. <%= link_to "Go to Home",:controller => :rounds,:action => "index" %>
+    You have created all the rounds. <%= link_to "Go to Home", :controller => :rounds, :action => "index" %>
 
 <% else %>
     <%= form_for @round, :url => {:action => 'create', :controller =>:rounds, :round_create_counter=>@counter} do |f| %>
@@ -37,7 +94,8 @@
 
                 </td>
 
-                </tr><tr>
+              </tr>
+              <tr>
                 <td>
                   <% @departments.each do |department| %>
                       <h3><a href="#"><b style="color: orange;"><%= department.name %> </b></a></h3>
@@ -56,65 +114,67 @@
               </tr>
               <tr>
                 <td>
-                      <h3><a href="#"><b style="color: orange;">HR Incentives</b></a></h3>
+                  <h3><a href="#"><b style="color: orange;">HR Incentives</b></a></h3>
 
-                      <div>
-                        <table>
-                        <% @hr_incentives.each_with_index do |hr_incentive,index| %>
-                            <%= f.fields_for :hr_incentive_for_rounds do |builder| %>
-                                  <tr>
+                  <div>
+                    <table>
+                      <% @hr_incentives.each_with_index do |hr_incentive, index| %>
+                          <%= f.fields_for :hr_incentive_for_rounds do |builder| %>
+                              <tr class=<%= "hr#{index}" %>>
 
                                 <%= builder.hidden_field :round_id, :value=>f.id %>
 
-                                <td><div class=<%="hr#{index}"%>><%= builder.check_box :hr_incentive_id, {:checked => false}, "#{hr_incentive.id}" %><%= hr_incentive.name %></div></td>
+                                <td><%= builder.check_box :hr_incentive_id, {:checked => false}, "#{hr_incentive.id}" %><%= hr_incentive.name %></td>
 
-                                <td width="30%"><div class=<%="hr#{index}"%>><%= builder.label :Min_Range%><%= builder.text_field :min_limit ,:size=>2,:disabled=>true%></div></td>
-                                <td width="30%"><div class=<%="hr#{index}"%>><%= builder.label :Max_Range%><%= builder.text_field :max_limit,:size=>2,:disabled=>true%></div></td>
+                                <td width="30%"><%= builder.label :Min_Range %><%= builder.text_field :min_limit, :size=>2, :disabled=>true %></td>
+                                <td width="30%"><%= builder.label :Max_Range %><%= builder.text_field :max_limit, :size=>2, :disabled=>true %></td>
 
 
-                                </tr>
-                            <% end %>
-                        <% end %>
-                        </table>
-                      </div>
+                              </tr>
+                          <% end %>
+                      <% end %>
+                    </table>
+                  </div>
                 </td>
-                </tr><tr>
-               <td>
-                      <h3><a href="#"><b style="color: orange;">Channel Incentives</b></a></h3>
-
-                      <div>
-                        <table>
-                        <% @channel_incentives.each_with_index do |channel_incentive,index| %>
-                            <%= f.fields_for :channel_incentive_for_rounds do |builder| %>
-                                <tr>
-                                <%= builder.hidden_field :round_id, :value=>f.id %>
-                                <td><div class=<%="ch#{index}"%>><%= builder.check_box :channel_incentive_id, {:checked => false}, "#{channel_incentive.id}" %> <%= channel_incentive.name %></div></td>
-                                <td width="30%"><div class=<%="ch#{index}"%>><%= builder.label :Min_Range%><%= builder.text_field :min_limit ,:size=>2%></div></td>
-                                <td width="30%"><div class=<%="ch#{index}"%>><%= builder.label :Max_Range%><%= builder.text_field :max_limit ,:size=>2%></div></td>
-                                </tr>
-                            <% end %>
-                        <% end %>
-                        </table>
-                      </div>
-                </td>
-              </tr><tr>
+              </tr>
+              <tr>
                 <td>
-                      <h3><a href="#"><b style="color: orange;">Media</b></a></h3>
+                  <h3><a href="#"><b style="color: orange;">Channel Incentives</b></a></h3>
 
-                      <div>
-                        <table>
-                        <% @media.each do |medium| %>
-                            <%= f.fields_for :media_for_rounds do |builder| %>
-                                  <tr>
+                  <div>
+                    <table>
+                      <% @channel_incentives.each_with_index do |channel_incentive, index| %>
+                          <%= f.fields_for :channel_incentive_for_rounds do |builder| %>
+                              <tr class=<%= "ch#{index}" %>>
+                                <%= builder.hidden_field :round_id, :value=>f.id %>
+                                <td><%= builder.check_box :channel_incentive_id, {:checked => false}, "#{channel_incentive.id}" %> <%= channel_incentive.name %></td>
+                                <td width="30%"><%= builder.label :Min_Range %><%= builder.text_field :min_limit, :size=>2 %></td>
+                                <td width="30%"><%= builder.label :Max_Range %><%= builder.text_field :max_limit, :size=>2 %></td>
+                              </tr>
+                          <% end %>
+                      <% end %>
+                    </table>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <h3><a href="#"><b style="color: orange;">Media</b></a></h3>
+
+                  <div>
+                    <table>
+                      <% @media.each_with_index do |medium, index| %>
+                          <%= f.fields_for :media_for_rounds do |builder| %>
+                              <tr class=<%= "md#{index}" %>>
                                 <%= builder.hidden_field :round_id, :value=>f.id %>
                                 <td><%= builder.check_box :medium_id, {:checked => false}, "#{medium.id}" %> <%= medium.name %></td>
-                                <td width="30%"><%= builder.label :Min_Range%><%= builder.text_field :min_limit ,:size=>2%></td>
-                                <td width="30%"><%= builder.label :Max_Range%><%= builder.text_field :max_limit ,:size=>2%></td>
-                                </tr>
-                            <% end %>
-                        <% end %>
-                            </table>
-                      </div>
+                                <td width="30%"><%= builder.label :Min_Range %><%= builder.text_field :min_limit, :size=>2 %></td>
+                                <td width="30%"><%= builder.label :Max_Range %><%= builder.text_field :max_limit, :size=>2 %></td>
+                              </tr>
+                          <% end %>
+                      <% end %>
+                    </table>
+                  </div>
                 </td>
               </tr>
             </table>

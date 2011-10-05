@@ -14,18 +14,6 @@
          <script type="text/javascript">
              $(function(){
 
-                 $(" tr > td > div > :checkbox ").click(function(event){
-
-                     var x=$(this).parent().attr("class");
-                     if($(this).attr('checked'))
-                        $("."+x+" > :text").attr('disabled',false);
-                     else
-                     {
-                     $("."+x+" > :text").attr('disabled',true);
-                     $("."+x+" > :text").attr('value','0');
-                     }
-                    });
-
 
 
                  // Accordion

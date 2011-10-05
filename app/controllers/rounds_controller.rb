@@ -62,6 +62,7 @@ class RoundsController < ApplicationController
     @counter=params[:round_create_counter].to_i
     respond_to do |format|
       if @round.save
+         @round.save
         format.html { redirect_to(:action => 'new', :case_study_id=>@round.case_study_id, :round_create_counter=>@counter) }
       else
         format.html { render :action => "new" }
